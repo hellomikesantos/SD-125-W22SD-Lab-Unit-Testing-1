@@ -15,4 +15,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SD-125-W22SD-Lab-Unit-Testing-1\SD-125-W22SD-Lab-Unit-Testing-1.csproj" />
+  </ItemGroup>
+
 </Project>
