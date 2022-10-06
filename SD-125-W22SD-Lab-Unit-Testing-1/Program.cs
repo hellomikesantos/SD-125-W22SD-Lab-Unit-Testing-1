@@ -1,4 +1,5 @@
-﻿class Program
+﻿
+class Program
 {
     static void Main(string[] args)
     {
@@ -91,6 +92,13 @@ public class VehicleTracker
     public List<Vehicle> ParkedPassholders()
     {
         List<Vehicle> passHolders = new List<Vehicle>();
+        //foreach(KeyValuePair<int, Vehicle> slot in this.VehicleList)
+        //{
+        //    if (slot.Value.Pass)
+        //    {
+        //        passHolders.Add(slot.Value);
+        //    }
+        //}
         passHolders.Add(this.VehicleList.FirstOrDefault(v => v.Value.Pass).Value);
         return passHolders;
     }
@@ -102,3 +110,4 @@ public class VehicleTracker
         return percentage;
     }
 }
+
