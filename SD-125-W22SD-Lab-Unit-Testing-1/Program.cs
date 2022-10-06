@@ -110,4 +110,3 @@ public class VehicleTracker
         return percentage;
     }
 }
-
