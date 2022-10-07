@@ -134,7 +134,7 @@ namespace VehicleTrackerUnitTest
 
 
             // act & assert
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsException<Exception>(() =>
             {
                 tracker.RemoveVehicle(-3);
             });
@@ -153,7 +153,7 @@ namespace VehicleTrackerUnitTest
             tracker.VehicleList[1] = vehicle;
 
             // act & assert
-            Assert.ThrowsException<NullReferenceException>(() =>
+            Assert.ThrowsException<Exception>(() =>
             {
                 tracker.RemoveVehicle(5);
             });
@@ -294,15 +294,19 @@ namespace VehicleTrackerUnitTest
             int capacity = 3;
             string address = "130 Henlow Bay";
             VehicleTracker tracker = new VehicleTracker(capacity, address);
+            
 
             string license = "NDL-8349";
             bool pass = false;
             Vehicle vehicle = new Vehicle(license, pass);
             Vehicle vehicle2 = new Vehicle("ABC-222", true);
             Vehicle vehicle3 = new Vehicle("QWE-102", true);
+            tracker.AddVehicle(vehicle);
+            tracker.AddVehicle(vehicle2);
+            tracker.AddVehicle(vehicle3);
 
             int percentage = tracker.PassholderPercentage();
-            int assertedPercentage = (int)66.66;
+            int assertedPercentage = (2 / 3) * 100;
 
             // assert
             Assert.AreEqual(assertedPercentage,

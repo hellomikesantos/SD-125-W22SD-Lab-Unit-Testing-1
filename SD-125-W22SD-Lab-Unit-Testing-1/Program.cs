@@ -81,21 +81,19 @@ public class VehicleTracker
 
     public bool RemoveVehicle(int slotNumber)
     {
-        try
+        if (slotNumber > this.Capacity)
         {
-            if (slotNumber > this.Capacity)
-            {
-                return false;
-            }
-            this.VehicleList[slotNumber] = null;
-            this.SlotsAvailable++;
-            return true;
-        }
-        catch
+            throw new Exception(BadSlotNumberMessage);
+            
+        } else if (slotNumber < 0)
         {
-            throw new ArgumentException(SlotsFullMessage);
+            throw new Exception(BadSlotNumberMessage);
         }
+        this.VehicleList[slotNumber] = null;
+        this.SlotsAvailable++;
 
+        return true;
+        
     }
 
     public List<Vehicle> ParkedPassholders()
