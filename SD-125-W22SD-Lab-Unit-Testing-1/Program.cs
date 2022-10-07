@@ -47,6 +47,7 @@ public class VehicleTracker
         {
 
             this.VehicleList.Add(i, null);
+            this.SlotsAvailable++;
         }
     }
 
@@ -57,7 +58,7 @@ public class VehicleTracker
             if (slot.Value == null)
             {
                 this.VehicleList[slot.Key] = vehicle;
-                this.SlotsAvailable++;
+                this.SlotsAvailable--;
                 return;
             }
         }
@@ -69,7 +70,7 @@ public class VehicleTracker
         try
         {
             int slot = this.VehicleList.First(v => v.Value.Licence == licence).Key;
-            this.SlotsAvailable--;
+            this.SlotsAvailable++;
             this.VehicleList[slot] = null;
         }
         catch
@@ -80,26 +81,34 @@ public class VehicleTracker
 
     public bool RemoveVehicle(int slotNumber)
     {
-        if (slotNumber > this.Capacity)
+        try
         {
-            return false;
+            if (slotNumber > this.Capacity)
+            {
+                return false;
+            }
+            this.VehicleList[slotNumber] = null;
+            this.SlotsAvailable++;
+            return true;
         }
-        this.VehicleList[slotNumber] = null;
-        this.SlotsAvailable++;
-        return true;
+        catch
+        {
+            throw new ArgumentException(SlotsFullMessage);
+        }
+
     }
 
     public List<Vehicle> ParkedPassholders()
     {
         List<Vehicle> passHolders = new List<Vehicle>();
-        //foreach(KeyValuePair<int, Vehicle> slot in this.VehicleList)
-        //{
-        //    if (slot.Value.Pass)
-        //    {
-        //        passHolders.Add(slot.Value);
-        //    }
-        //}
-        passHolders.Add(this.VehicleList.FirstOrDefault(v => v.Value.Pass).Value);
+        foreach (KeyValuePair<int, Vehicle> slot in this.VehicleList)
+        {
+            if (slot.Value.Pass)
+            {
+                passHolders.Add(slot.Value);
+            }
+        }
+        //passHolders.Add(this.VehicleList.FirstOrDefault(v => v.Value.Pass).Value);
         return passHolders;
     }
 
