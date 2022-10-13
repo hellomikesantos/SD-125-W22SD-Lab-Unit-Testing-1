@@ -1,8 +1,48 @@
+using Microsoft.EntityFrameworkCore;
+using Moq;
+
 namespace VehicleTrackerUnitTest
 {
     [TestClass]
     public class UnitTest1
     {
+        public UnitTest1()
+        {
+            // Mock data
+            var dataVehicleTrackerList = new List<VehicleTracker>
+            {
+                new VehicleTracker(3, "123 Ave."),
+                new VehicleTracker(4, "123 Ave."),
+                new VehicleTracker(5, "123 Ave."),
+                new VehicleTracker(6, "123 Ave."),
+                new VehicleTracker(7, "123 Ave."),
+            }.AsQueryable();
+
+            var dataVehicleList = new List<Vehicle>
+            {
+                new Vehicle("asd", false),
+                new Vehicle("qwe", false),
+                new Vehicle("zxc", false),
+                new Vehicle("123", false),
+                new Vehicle("jkl", false),
+            }.AsQueryable();
+
+            // Mock dBSet
+            var mockDbSetVehicleTracker = new Mock<DbSet<VehicleTracker>>();
+            var mockDbSetVehicle = new Mock<DbSet<Vehicle>>();
+
+            // hook up data to dBSet of VehicleTracker
+            mockDbSetVehicleTracker.As<IQueryable<VehicleTracker>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockDbSetVehicleTracker.As<IQueryable<VehicleTracker>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockDbSetVehicleTracker.As<IQueryable<VehicleTracker>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockDbSetVehicleTracker.As<IQueryable<VehicleTracker>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator);
+
+            // hook up data to dbSet of Vehicle
+            mockDbSetVehicle.As<IQueryable<Vehicle>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockDbSetVehicle.As<IQueryable<Vehicle>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockDbSetVehicle.As<IQueryable<Vehicle>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockDbSetVehicle.As<IQueryable<Vehicle>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator);
+        }
         [TestMethod]
         public void VehicleTracker_Constructor()
         {
